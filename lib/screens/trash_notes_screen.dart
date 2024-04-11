@@ -34,8 +34,28 @@ class TrashNotesScreen extends StatelessWidget {
                       IconButton(
                         icon: const Icon(Icons.restore),
                         onPressed: () {
-                          controller.restoreNoteFromTrash(note);
-                          Get.back();
+                          showDialog(
+                              context: context,
+                              builder: (context) {
+                                return AlertDialog(
+                                    title: const Text("Confirm"),
+                                    content: const Text(
+                                        "Are you sure you want to restore this note?"),
+                                    actions: [
+                                      TextButton(
+                                        onPressed: () => Navigator.pop(context),
+                                        child: const Text("Cancel"),
+                                      ),
+                                      TextButton(
+                                        onPressed: () {
+                                          controller.restoreNoteFromTrash(note);
+                                          Get.back();
+                                          Get.back();
+                                        },
+                                        child: const Text("Restore"),
+                                      ),
+                                    ]);
+                              });
                         },
                       ),
                       IconButton(
@@ -44,8 +64,32 @@ class TrashNotesScreen extends StatelessWidget {
                           color: Colors.red,
                         ),
                         onPressed: () {
-                          controller.deleteNotePermanently(note);
-                          Get.back();
+                          showDialog(
+                              context: context,
+                              builder: (context) {
+                                return AlertDialog(
+                                    title: const Text("Confirm"),
+                                    content: const Text(
+                                        "Are you sure you want to permanently delete this note?"),
+                                    actions: [
+                                      TextButton(
+                                        onPressed: () => Navigator.pop(context),
+                                        child: const Text("Cancel"),
+                                      ),
+                                      TextButton(
+                                        onPressed: () {
+                                          controller
+                                              .deleteNotePermanently(note);
+                                          Get.back();
+                                          Get.back();
+                                        },
+                                        child: const Text(
+                                          "Delete Permanently",
+                                          style: TextStyle(color: Colors.red),
+                                        ),
+                                      ),
+                                    ]);
+                              });
                         },
                       ),
                     ],
